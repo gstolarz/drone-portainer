@@ -1,0 +1,135 @@
+--- lib/portainer-orig/.gitignore
++++ lib/portainer/.gitignore
+@@ -1,24 +1,9 @@
+-# Compiled Object files, Static and Dynamic libs (Shared Objects)
+-*.o
+-*.a
+-*.so
+-
+-# Folders
+-_obj
+-_test
+-
+-# Architecture specific extensions/prefixes
+-*.[568vq]
+-[568vq].out
+-
+-*.cgo1.go
+-*.cgo2.c
+-_cgo_defun.c
+-_cgo_gotypes.go
+-_cgo_export.*
+-
+-_testmain.go
+-
+-*.exe
+-*.test
+-*.prof
++.openapi-generator
++api
++docs
++.openapi-generator-ignore
++.travis.yml
++README.md
++git_push.sh
++go.mod
++go.sum
+--- lib/portainer-orig/api_endpoints.go
++++ lib/portainer/api_endpoints.go
+@@ -193,37 +193,37 @@
+ 		localVarFormParams.Add("TLSSkipClientVerify", parameterToString(*r.tLSSkipClientVerify, ""))
+ 	}
+ 	localVarFormFileName = "TLSCACertFile"
+-	var localVarFile *os.File
++	var localVarTLSCACertFile *os.File
+ 	if r.tLSCACertFile != nil {
+-		localVarFile = *r.tLSCACertFile
++		localVarTLSCACertFile = *r.tLSCACertFile
+ 	}
+-	if localVarFile != nil {
+-		fbs, _ := _ioutil.ReadAll(localVarFile)
++	if localVarTLSCACertFile != nil {
++		fbs, _ := _ioutil.ReadAll(localVarTLSCACertFile)
+ 		localVarFileBytes = fbs
+-		localVarFileName = localVarFile.Name()
+-		localVarFile.Close()
++		localVarFileName = localVarTLSCACertFile.Name()
++		localVarTLSCACertFile.Close()
+ 	}
+ 	localVarFormFileName = "TLSCertFile"
+-	var localVarFile *os.File
++	var localVarTLSCertFile *os.File
+ 	if r.tLSCertFile != nil {
+-		localVarFile = *r.tLSCertFile
++		localVarTLSCertFile = *r.tLSCertFile
+ 	}
+-	if localVarFile != nil {
+-		fbs, _ := _ioutil.ReadAll(localVarFile)
++	if localVarTLSCertFile != nil {
++		fbs, _ := _ioutil.ReadAll(localVarTLSCertFile)
+ 		localVarFileBytes = fbs
+-		localVarFileName = localVarFile.Name()
+-		localVarFile.Close()
++		localVarFileName = localVarTLSCertFile.Name()
++		localVarTLSCertFile.Close()
+ 	}
+ 	localVarFormFileName = "TLSKeyFile"
+-	var localVarFile *os.File
++	var localVarTLSKeyFile *os.File
+ 	if r.tLSKeyFile != nil {
+-		localVarFile = *r.tLSKeyFile
++		localVarTLSKeyFile = *r.tLSKeyFile
+ 	}
+-	if localVarFile != nil {
+-		fbs, _ := _ioutil.ReadAll(localVarFile)
++	if localVarTLSKeyFile != nil {
++		fbs, _ := _ioutil.ReadAll(localVarTLSKeyFile)
+ 		localVarFileBytes = fbs
+-		localVarFileName = localVarFile.Name()
+-		localVarFile.Close()
++		localVarFileName = localVarTLSKeyFile.Name()
++		localVarTLSKeyFile.Close()
+ 	}
+ 	if r.azureApplicationID != nil {
+ 		localVarFormParams.Add("AzureApplicationID", parameterToString(*r.azureApplicationID, ""))
+--- lib/portainer-orig/model_stack.go
++++ lib/portainer/model_stack.go
+@@ -18,7 +18,7 @@
+ // Stack struct for Stack
+ type Stack struct {
+ 	// Stack identifier
+-	Id *string `json:"Id,omitempty"`
++	Id *int32 `json:"Id,omitempty"`
+ 	// Stack name
+ 	Name *string `json:"Name,omitempty"`
+ 	// Stack type. 1 for a Swarm stack, 2 for a Compose stack
+@@ -53,9 +53,9 @@
+ }
+ 
+ // GetId returns the Id field value if set, zero value otherwise.
+-func (o *Stack) GetId() string {
++func (o *Stack) GetId() int32 {
+ 	if o == nil || o.Id == nil {
+-		var ret string
++		var ret int32
+ 		return ret
+ 	}
+ 	return *o.Id
+@@ -63,7 +63,7 @@
+ 
+ // GetIdOk returns a tuple with the Id field value if set, nil otherwise
+ // and a boolean to check if the value has been set.
+-func (o *Stack) GetIdOk() (*string, bool) {
++func (o *Stack) GetIdOk() (*int32, bool) {
+ 	if o == nil || o.Id == nil {
+ 		return nil, false
+ 	}
+@@ -80,7 +80,7 @@
+ }
+ 
+ // SetId gets a reference to the given string and assigns it to the Id field.
+-func (o *Stack) SetId(v string) {
++func (o *Stack) SetId(v int32) {
+ 	o.Id = &v
+ }
+ 
