@@ -1,6 +1,6 @@
 #!/bin/sh
 docker run --rm -u $(id -u):$(id -g) -v $PWD:/workdir \
-    openapitools/openapi-generator-cli generate \
+    openapitools/openapi-generator-cli:v5.2.0 generate \
     -i /workdir/swagger/portainer-api-v1.24.1.yaml \
     -g go \
     -o /workdir/lib/portainer \
